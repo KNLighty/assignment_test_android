@@ -18,25 +18,24 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="0.5"
-            android:text="Name"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/numcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Power"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/charcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Power"
-            android:textColor="@color/gray"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <TextView
@@ -44,31 +43,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Power"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Power"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Power"
-            android:textColor="@color/gray" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/previous"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Power"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </LinearLayout>
