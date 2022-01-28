@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,21 +39,29 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
         } else viewHolder = (ViewHolder) convertView.getTag();
 
         final Currency currency = currencies.get(position);
-        viewHolder.idView.setText(currency.getId());
-        viewHolder.numcodeView.setText(currency.getNumCode());
-        viewHolder.charcodeView.setText(currency.getCharCode());
-        viewHolder.nominalView.setText(currency.getNominal());
-        viewHolder.nameView.setText(currency.getName());
-        viewHolder.valueView.setText(currency.getValue());
-        viewHolder.previousView.setText(currency.getPrevious());
+        viewHolder.idView.setText("ID: " + currency.getId());
+        viewHolder.numcodeView.setText("NumCode: " + currency.getNumCode());
+        viewHolder.charcodeView.setText("CharCode: " + currency.getCharCode());
+        viewHolder.nominalView.setText("Nominal: " + currency.getNominal());
+        viewHolder.nameView.setText("Name: " + currency.getName());
+        viewHolder.valueView.setText("Value: " + currency.getValue());
+        viewHolder.previousView.setText("Previous: " + currency.getPrevious());
+
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                convertRubToCurrency(currency);
+            }
+        });
 
         return convertView;
     }
 
     private class ViewHolder {
+
         final TextView idView, numcodeView, charcodeView, nominalView;
         final TextView nameView, valueView, previousView;
-
+        final Button button;
         public ViewHolder(View view) {
             idView = view.findViewById(R.id.id);
             numcodeView = view.findViewById(R.id.numcode);
@@ -61,6 +70,12 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
             nameView = view.findViewById(R.id.name);
             valueView = view.findViewById(R.id.value);
             previousView = view.findViewById(R.id.previous);
+            button = view.findViewById(R.id.convert_button);
         }
+
+    }
+
+    private void convertRubToCurrency(Currency currency) {
+
     }
 }

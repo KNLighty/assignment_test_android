@@ -22,31 +22,31 @@ public class Currency {
     }
 
     public String getId() {
-        return "ID: " + id;
+        return id;
     }
 
     public String getNumCode() {
-        return "NumCode: " + numCode;
+        return numCode;
     }
 
     public String getCharCode() {
-        return "CharCode: " + charCode;
+        return charCode;
     }
 
     public String getNominal() {
-        return "Nominal: " + nominal;
+        return nominal;
     }
 
     public String getName() {
-        return "Name: " + name;
+        return name;
     }
 
     public String getValue() {
-        return "Value: " + value;
+        return value;
     }
 
     public String getPrevious() {
-        return "Previous: " + previous;
+        return previous;
     }
 
     @NonNull
