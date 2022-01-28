@@ -13,13 +13,13 @@ import androidx.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class CurrencyAdapter extends ArrayAdapter<HashMap<String, String>> {
+public class CurrencyAdapter extends ArrayAdapter<Currency> {
 
     private LayoutInflater inflater;
     private int resource;
-    private List<HashMap<String, String>> currencies;
+    private List<Currency> currencies;
 
-    public CurrencyAdapter(@NonNull Context context, int resource, List<HashMap<String, String>> currencies) {
+    public CurrencyAdapter(@NonNull Context context, int resource, List<Currency> currencies) {
         super(context, resource, currencies);
         this.inflater = LayoutInflater.from(context);
         this.resource = resource;
@@ -37,10 +37,16 @@ public class CurrencyAdapter extends ArrayAdapter<HashMap<String, String>> {
             convertView.setTag(viewHolder);
         } else viewHolder = (ViewHolder) convertView.getTag();
 
-        final HashMap<String, String> currency = currencies.get(position);
-        //viewHolder.idView.setText();
+        final Currency currency = currencies.get(position);
+        viewHolder.idView.setText(currency.getId());
+        viewHolder.numcodeView.setText(currency.getNumCode());
+        viewHolder.charcodeView.setText(currency.getCharCode());
+        viewHolder.nominalView.setText(currency.getNominal());
+        viewHolder.nameView.setText(currency.getName());
+        viewHolder.valueView.setText(currency.getValue());
+        viewHolder.previousView.setText(currency.getPrevious());
 
-        return null;
+        return convertView;
     }
 
     private class ViewHolder {

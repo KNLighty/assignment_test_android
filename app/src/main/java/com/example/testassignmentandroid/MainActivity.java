@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String URI = "https://www.cbr-xml-daily.ru/daily_json.js";
     private String response;
     private ListView listView;
-    ArrayList<HashMap<String, String>> currencies;
+    ArrayList<Currency> currencies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +65,14 @@ public class MainActivity extends AppCompatActivity {
                                     String key = arrayKey.next();
                                     JSONObject jSonItem = jSonValute.getJSONObject(key);
                                     data = formDataMap(jSonItem);
-                                    currencies.add(data);
-
-                                    ListAdapter adapter = new SimpleAdapter(
-                                            MainActivity.this,
-                                            currencies,
-                                            R.layout.listview_layout,
-                                            new String[]{"id", "numcode", "charcode", "nominal", "name", "value", "previous"},
-                                            new int[]{R.id.id, R.id.numcode, R.id.charcode, R.id.nominal, R.id.name, R.id.value, R.id.previous});
-                                    listView.setAdapter(adapter);
+                                    currencies.add(new Currency(data.get("id"), data.get("numcode"),
+                                            data.get("charcode"), data.get("nominal"),
+                                            data.get("name"), data.get("value"), data.get("previous"))
+                                    );
                                 }
-                                Log.d(TAG, "LIST: " + currencies);
+
+                                CurrencyAdapter adapter = new CurrencyAdapter(MainActivity.this, R.layout.listview_layout, currencies);
+                                listView.setAdapter(adapter);
                             } catch (JSONException e) {
                                 Log.e(TAG, e.getMessage());
                             }
