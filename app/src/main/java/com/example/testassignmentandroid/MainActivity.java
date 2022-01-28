@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                                             new int[]{R.id.id, R.id.numcode, R.id.charcode, R.id.nominal, R.id.name, R.id.value, R.id.previous});
                                     listView.setAdapter(adapter);
                                 }
+                                Log.d(TAG, "LIST: " + currencies);
                             } catch (JSONException e) {
                                 Log.e(TAG, e.getMessage());
                             }
