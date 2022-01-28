@@ -1,6 +1,8 @@
 package com.example.testassignmentandroid;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +78,7 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
     }
 
     private void convertRubToCurrency(Currency currency) {
-
+        Intent intent = new Intent(getContext(), CurrencyConverterActivity.class);
+        getContext().startActivity(intent);
     }
 }
