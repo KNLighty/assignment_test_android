@@ -1,6 +1,5 @@
 package com.example.testassignmentandroid;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class CurrencyAdapter extends ArrayAdapter<Currency> {
@@ -52,7 +50,7 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                convertRubToCurrency(currency);
+                startConvertActivity(currency);
             }
         });
 
@@ -77,8 +75,9 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
 
     }
 
-    private void convertRubToCurrency(Currency currency) {
+    private void startConvertActivity(Currency currency) {
         Intent intent = new Intent(getContext(), CurrencyConverterActivity.class);
+        intent.putExtra(Currency.class.getSimpleName(), currency);
         getContext().startActivity(intent);
     }
 }

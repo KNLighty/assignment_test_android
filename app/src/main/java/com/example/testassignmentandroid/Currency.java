@@ -2,7 +2,9 @@ package com.example.testassignmentandroid;
 
 import androidx.annotation.NonNull;
 
-public class Currency {
+import java.io.Serializable;
+
+public class Currency implements Serializable {
     private String id;
     private String numCode;
     private String charCode;
