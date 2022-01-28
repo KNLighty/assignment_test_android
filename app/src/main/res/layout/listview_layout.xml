@@ -6,68 +6,69 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="2dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="2dp">
+
         <TextView
             android:id="@+id/id"
-            android:text="Name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="0.5"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black" />
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/numcode"
-            android:text="Power"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            />
+            android:layout_weight="0.5"
+            android:text="Power"
+            android:textColor="@color/gray" />
+
         <TextView
             android:id="@+id/charcode"
-            android:text="Power"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Power"
             android:textColor="@color/gray"
-            />
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/nominal"
-            android:text="Power"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            />
+            android:layout_weight="0.5"
+            android:text="Power"
+            android:textColor="@color/gray" />
+
         <TextView
             android:id="@+id/name"
-            android:text="Power"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            />
+            android:layout_weight="0.5"
+            android:text="Power"
+            android:textColor="@color/gray" />
+
         <TextView
             android:id="@+id/value"
-            android:text="Power"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            />
+            android:layout_weight="0.5"
+            android:text="Power"
+            android:textColor="@color/gray" />
+
         <TextView
             android:id="@+id/previous"
-            android:text="Power"
-            android:layout_weight="0.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            />
+            android:layout_weight="0.5"
+            android:text="Power"
+            android:textColor="@color/gray" />
     </LinearLayout>
 </LinearLayout>

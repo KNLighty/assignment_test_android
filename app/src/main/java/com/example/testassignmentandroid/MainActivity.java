@@ -33,15 +33,16 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv;
     private String myResponse;
     private ListView lv;
+    ArrayList<HashMap<String,String>> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        arrayList = new ArrayList<>();
         listOfCurrency  = new ArrayList<>();
         lv = (ListView) findViewById(R.id.listview);
-        tv = (TextView) findViewById(R.id.textViewTest);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(URI)
@@ -59,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            HashMap<String,String> data;
                             try {
                                 JSONObject reader = new JSONObject(myResponse);
-                                tv.setText("valute: START");
                                 JSONObject rbcGETRates = new JSONObject(reader.toString());
                                 JSONObject jSonValute = rbcGETRates.getJSONObject("Valute");
                                 Iterator<String> arrayKey = jSonValute.keys();
@@ -69,22 +70,28 @@ public class MainActivity extends AppCompatActivity {
                                 while (arrayKey.hasNext()) {
                                     String key = arrayKey.next();
                                     JSONObject jSonItem = jSonValute.getJSONObject(key);
-                                    CurrencyRateModel currencyitems = new CurrencyRateModel(
-                                            jSonItem.getString("ID"),
-                                            jSonItem.getString("NumCode"),
-                                            jSonItem.getString("CharCode"),
-                                            jSonItem.getInt("Nominal"),
-                                            jSonItem.getString("Name"),
-                                            jSonItem.getDouble("Value"),
-                                            jSonItem.getDouble("Previous")
-                                    );
-                                    listOfCurrency.add(currencyitems);
-                                }
-                                for (CurrencyRateModel m : listOfCurrency) {
-                                    Log.d(TAG, "CurrencyRateModel:" + m);
+                                    data = new HashMap<>();
+
+                                    data.put("id", jSonItem.getString("ID"));
+                                    data.put("numcode", jSonItem.getString("NumCode"));
+                                    data.put("charcode", jSonItem.getString("CharCode"));
+                                    data.put("nominal", jSonItem.getString("Nominal"));
+                                    data.put("name", jSonItem.getString("Name"));
+                                    data.put("value", jSonItem.getString("Value"));
+                                    data.put("previous", jSonItem.getString("Previous"));
+
+                                    arrayList.add(data);
+
+                                    ListAdapter adapter = new SimpleAdapter(
+                                            MainActivity.this,
+                                            arrayList,
+                                            R.layout.listview_layout,
+                                            new String[]{"id", "numcode", "charcode", "nominal", "name", "value", "previous"},
+                                            new int[]{R.id.id, R.id.numcode, R.id.charcode, R.id.nominal, R.id.name, R.id.value, R.id.previous});
+                                    lv.setAdapter(adapter);
                                 }
                             } catch (JSONException e) {
-                                tv.setText("ОШИБКА");
+                                Log.e(TAG, "ОШИБКА");
                             }
                         }
                     });
