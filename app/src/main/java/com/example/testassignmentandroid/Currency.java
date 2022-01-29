@@ -5,23 +5,13 @@ import androidx.annotation.NonNull;
 import java.io.Serializable;
 
 public class Currency implements Serializable {
-    private String id;
-    private String numCode;
-    private String charCode;
-    private String nominal;
-    private String name;
-    private String value;
-    private String previous;
-
-    public Currency(String id, String nameCode, String charCode, String nominal, String name, String value, String previous) {
-        this.id = id;
-        this.numCode = nameCode;
-        this.charCode = charCode;
-        this.nominal = nominal;
-        this.name = name;
-        this.value = value;
-        this.previous = previous;
-    }
+    public String id;
+    public String numCode;
+    public String charCode;
+    public String nominal;
+    public String name;
+    public String value;
+    public String previous;
 
     public String getId() {
         return id;
@@ -61,7 +51,7 @@ public class Currency implements Serializable {
         result.append("Nominal: " + nominal + "/n");
         result.append("Name: " + name + "/n");
         result.append("Value: " + value + "/n");
-        result.append("Previous: " + previous + "/n");
+        result.append("Previous: " + previous);
 
         return result.toString();
     }

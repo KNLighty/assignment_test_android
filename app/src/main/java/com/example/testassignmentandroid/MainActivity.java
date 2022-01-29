@@ -74,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                                 while (arrayKey.hasNext()) {
                                     String key = arrayKey.next();
                                     JSONObject jSonItem = jSonValute.getJSONObject(key);
-                                    data = formDataMap(jSonItem);
-                                    currencies.add(new Currency(data.get("id"), data.get("numcode"),
-                                            data.get("charcode"), data.get("nominal"),
-                                            data.get("name"), data.get("value"), data.get("previous"))
-                                    );
+
+                                    BuilderCurrency builderCurrency = new BuilderCurrency();
+                                    builderCurrency.setProperties(jSonItem);
+
+                                    currencies.add(builderCurrency.getCurrency());
                                 }
 
                                 CurrencyAdapter adapter = new CurrencyAdapter(MainActivity.this, R.layout.listview_layout, currencies);
@@ -104,19 +104,5 @@ public class MainActivity extends AppCompatActivity {
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
-    }
-
-    private HashMap<String, String> formDataMap(JSONObject jSonItem) throws JSONException {
-        HashMap<String, String> data = new HashMap<>();
-
-        data.put("id", jSonItem.getString("ID"));
-        data.put("numcode", jSonItem.getString("NumCode"));
-        data.put("charcode", jSonItem.getString("CharCode"));
-        data.put("nominal", jSonItem.getString("Nominal"));
-        data.put("name", jSonItem.getString("Name"));
-        data.put("value", jSonItem.getString("Value"));
-        data.put("previous", jSonItem.getString("Previous"));
-
-        return data;
     }
 }
