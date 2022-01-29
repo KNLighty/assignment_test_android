@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,6 +40,8 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String URI = "https://www.cbr-xml-daily.ru/daily_json.js";
+    private static final long TIME_BEFORE_UPDATE_IN_SECONDS = 10;
+    private boolean isUpdating = true;
     private String response;
     private ListView listView;
     private ArrayList<Currency> currencies;
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                                 CurrencyAdapter adapter = new CurrencyAdapter(
                                         MainActivity.this, R.layout.listview_layout, currencies);
                                 listView.setAdapter(adapter);
+                                update();
                             } catch (JSONException e) {
                                 Log.e(TAG, e.getMessage());
                             }
@@ -110,9 +115,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void restartActivity() {
-        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-        startActivity(intent);
+    public void restartActivity() {
+        recreate();
+    }
+
+    private void update() {
+        Intent service = new Intent(this, UpdateService.class);
+        startService(service);
     }
 
     private void checkNetworkConnection() {
