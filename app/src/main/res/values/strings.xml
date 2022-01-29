@@ -8,4 +8,5 @@
     <string name="convert_button_label">Конвертировать руб.</string>
     <string name="network_unavailable_error">Отсутсвует интернет-соединение, невозможно загрузить данные</string>
     <string name="conversion_header_activated">Конвертер валют: RUB -> </string>
+    <string name="menu_item_text">Обновить данные</string>
 </resources>
