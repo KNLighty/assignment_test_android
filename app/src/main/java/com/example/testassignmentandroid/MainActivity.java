@@ -1,7 +1,10 @@
 package com.example.testassignmentandroid;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         currencies = new ArrayList<>();
         listView = findViewById(R.id.listview);
+
+        checkNetworkConnection();
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(URI)
@@ -83,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void checkNetworkConnection() {
+        if (!isNetworkConnected()) {
+            Log.e(TAG, "Internet is not available");
+            TextView tv = findViewById(R.id.error_tv);
+            tv.setText("Отсутсвует интернет-соединение, невозможно загрузить данные");
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
     private HashMap<String, String> formDataMap(JSONObject jSonItem) throws JSONException {

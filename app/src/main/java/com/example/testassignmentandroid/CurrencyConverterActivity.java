@@ -32,7 +32,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         amountET = findViewById(R.id.conversion_et);
 
         headerTV.setText("Конвертер валют: RUB -> " + currency.getCharCode());
-        resultTV.setText(0 + " " + currency.getCharCode());
+        resultTV.setText(0.0 + " " + currency.getCharCode());
         amountET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -46,7 +46,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO fix output
+
             }
         });
     }
@@ -59,12 +59,13 @@ public class CurrencyConverterActivity extends AppCompatActivity {
             rubsToConvert = Double.parseDouble(amount);
             targetCurrencyValue = Double.parseDouble(currency.getValue());
             targetCurrencyNominal = Double.parseDouble(currency.getNominal());
+
             Double rateRub = targetCurrencyValue / targetCurrencyNominal;
             Double result = (double) Math.round(rubsToConvert / rateRub * 1000d) / 1000d;
 
             resultTV.setText(result + " " + currency.getCharCode());
         } catch (Exception e) {
-            e.printStackTrace();
+            resultTV.setText(0.0 + " " + currency.getCharCode());
         }
     }
 }
