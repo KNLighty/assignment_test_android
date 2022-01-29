@@ -40,8 +40,9 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String URI = "https://www.cbr-xml-daily.ru/daily_json.js";
-    private static final long TIME_BEFORE_UPDATE_IN_SECONDS = 10;
+    private static final long TIME_BEFORE_UPDATE_IN_SECONDS = 30;
     private boolean isUpdating = true;
+    Intent updateService;
     private String response;
     private ListView listView;
     private ArrayList<Currency> currencies;
@@ -120,8 +121,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void update() {
-        Intent service = new Intent(this, UpdateService.class);
-        startService(service);
+        updateService = new Intent(this, UpdateService.class);
+        if (isUpdating) startService(updateService);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(updateService);
     }
 
     private void checkNetworkConnection() {

@@ -7,7 +7,7 @@ import android.os.IBinder;
 import java.util.concurrent.TimeUnit;
 
 public class UpdateService extends Service {
-    private static final long TIME_BEFORE_UPDATE_IN_SECONDS = 10;
+    private static final long TIME_BEFORE_UPDATE_IN_SECONDS = 300;
     private boolean stop;
 
     public UpdateService() {
@@ -25,11 +25,14 @@ public class UpdateService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Intent dialogIntent = new Intent(UpdateService.this, MainActivity.class);
+                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 while (true) {
                     if (stop) break;
                     try {
                         TimeUnit.SECONDS.sleep(TIME_BEFORE_UPDATE_IN_SECONDS);
-                        System.out.println("TIME" + TIME_BEFORE_UPDATE_IN_SECONDS);
+                        System.out.println("Restarting activity");
+                        startActivity(dialogIntent);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
