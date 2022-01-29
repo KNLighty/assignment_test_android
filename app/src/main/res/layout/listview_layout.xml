@@ -78,7 +78,7 @@
             android:layout_marginTop="5dp"
             android:layout_weight="0.5"
             android:padding="5dp"
-            android:text="Конвертировать руб."
+            android:text="@string/convert_button_label"
             android:textSize="@dimen/text_size" />
     </LinearLayout>
 </LinearLayout>

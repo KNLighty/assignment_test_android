@@ -36,19 +36,17 @@ public class MainActivity extends AppCompatActivity {
     private static final String URI = "https://www.cbr-xml-daily.ru/daily_json.js";
     private String response;
     private ListView listView;
-    ArrayList<Currency> currencies;
+    private ArrayList<Currency> currencies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkNetworkConnection();
 
         currencies = new ArrayList<>();
         listView = findViewById(R.id.listview);
-
-        checkNetworkConnection();
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(URI)
@@ -76,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
                                 while (arrayKey.hasNext()) {
                                     String key = arrayKey.next();
                                     JSONObject jSonItem = jSonValute.getJSONObject(key);
-
                                     BuilderCurrency builderCurrency = new BuilderCurrency();
-                                    builderCurrency.setProperties(jSonItem);
 
+                                    builderCurrency.setProperties(jSonItem);
                                     currencies.add(builderCurrency.getCurrency());
                                 }
 
-                                CurrencyAdapter adapter = new CurrencyAdapter(MainActivity.this, R.layout.listview_layout, currencies);
+                                CurrencyAdapter adapter = new CurrencyAdapter(
+                                        MainActivity.this, R.layout.listview_layout, currencies);
                                 listView.setAdapter(adapter);
                             } catch (JSONException e) {
                                 Log.e(TAG, e.getMessage());
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isNetworkConnected()) {
             Log.e(TAG, "Internet is not available");
             TextView tv = findViewById(R.id.error_tv);
-            tv.setText("Отсутсвует интернет-соединение, невозможно загрузить данные");
+            tv.setText(getString(R.string.network_unavailable_error));
         }
     }
 

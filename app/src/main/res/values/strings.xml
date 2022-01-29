@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Test Assignment Android</string>
+    <string name="conversion_header">Конвертер валют</string>
+    <string name="conversion_prompt_label">Укажите сумму в рублях:</string>
+    <string name="conversion_hint">Сумма</string>
+    <string name="conversion_result_label">Результат:</string>
+    <string name="conversion_default_result_value">0</string>
+    <string name="convert_button_label">Конвертировать руб.</string>
+    <string name="network_unavailable_error">Отсутсвует интернет-соединение, невозможно загрузить данные</string>
+    <string name="conversion_header_activated">Конвертер валют: RUB -> </string>
 </resources>

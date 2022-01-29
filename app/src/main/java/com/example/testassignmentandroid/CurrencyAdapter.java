@@ -1,5 +1,6 @@
 package com.example.testassignmentandroid;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ public class CurrencyAdapter extends ArrayAdapter<Currency> {
         this.currencies = currencies;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 

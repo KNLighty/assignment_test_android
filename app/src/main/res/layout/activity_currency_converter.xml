@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Конвертер валют"
+            android:text="@string/conversion_header"
             android:textColor="@color/black"
             android:textSize="@dimen/big_text_size" />
 
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:text="Укажите сумму в рублях: "
+            android:text="@string/conversion_prompt_label"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size" />
 
@@ -44,7 +44,7 @@
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
-            android:hint="Сумма"
+            android:hint="@string/conversion_hint"
             android:inputType="numberDecimal"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size" />
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="Результат: "
+            android:text="@string/conversion_result_label"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size" />
 
@@ -70,8 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:inputType="numberDecimal"
-            android:text="0"
+            android:text="@string/conversion_default_result_value"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size"
             tools:ignore="TouchTargetSizeCheck" />

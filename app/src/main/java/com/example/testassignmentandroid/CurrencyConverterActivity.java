@@ -2,6 +2,7 @@ package com.example.testassignmentandroid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,13 +26,15 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void formLayout(Bundle args) {
         currency = (Currency) args.getSerializable(Currency.class.getSimpleName());
         headerTV = findViewById(R.id.conversion_header_tv);
         resultTV = findViewById(R.id.conversion_result_tv);
         amountET = findViewById(R.id.conversion_et);
 
-        headerTV.setText("Конвертер валют: RUB -> " + currency.getCharCode());
+        headerTV.setText(getString(R.string.conversion_header_activated) + " "
+                + currency.getCharCode());
         resultTV.setText(0.0 + " " + currency.getCharCode());
         amountET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -51,6 +54,7 @@ public class CurrencyConverterActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void convertRubToTargetCurrency(String amount) {
         Double rubsToConvert;
         Double targetCurrencyValue;
