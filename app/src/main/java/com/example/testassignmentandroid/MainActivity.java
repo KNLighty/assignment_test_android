@@ -25,7 +25,14 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,7 +47,8 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private static final String URI = "https://www.cbr-xml-daily.ru/daily_json.js";
-    private static final long TIME_BEFORE_UPDATE_IN_SECONDS = 30;
+    private final String FILE_NAME = "data.txt";
+    private boolean hasSavedData;
     private boolean isUpdating = true;
     Intent updateService;
     private String response;
@@ -57,50 +65,54 @@ public class MainActivity extends AppCompatActivity {
         currencies = new ArrayList<>();
         listView = findViewById(R.id.listview);
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(URI)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.e(TAG, e.getMessage());
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    MainActivity.this.response = response.body().string();
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            HashMap<String, String> data;
-                            try {
-                                JSONObject reader = new JSONObject(MainActivity.this.response);
-                                JSONObject rbcGETRates = new JSONObject(reader.toString());
-                                JSONObject jSonValute = rbcGETRates.getJSONObject("Valute");
-                                Iterator<String> arrayKey = jSonValute.keys();
-
-                                while (arrayKey.hasNext()) {
-                                    String key = arrayKey.next();
-                                    JSONObject jSonItem = jSonValute.getJSONObject(key);
-                                    BuilderCurrency builderCurrency = new BuilderCurrency();
-
-                                    builderCurrency.setProperties(jSonItem);
-                                    currencies.add(builderCurrency.getCurrency());
-                                }
-
-                                CurrencyAdapter adapter = new CurrencyAdapter(
-                                        MainActivity.this, R.layout.listview_layout, currencies);
-                                listView.setAdapter(adapter);
-                                update();
-                            } catch (JSONException e) {
-                                Log.e(TAG, e.getMessage());
-                            }
-                        }
-                    });
+        if (hasSavedData) load();
+        else {
+            Request request = new Request.Builder()
+                    .url(URI)
+                    .build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    Log.e(TAG, e.getMessage());
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        MainActivity.this.response = response.body().string();
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                HashMap<String, String> data;
+                                try {
+                                    JSONObject reader = new JSONObject(MainActivity.this.response);
+                                    JSONObject rbcGETRates = new JSONObject(reader.toString());
+                                    JSONObject jSonValute = rbcGETRates.getJSONObject("Valute");
+                                    Iterator<String> arrayKey = jSonValute.keys();
+
+                                    while (arrayKey.hasNext()) {
+                                        String key = arrayKey.next();
+                                        JSONObject jSonItem = jSonValute.getJSONObject(key);
+                                        BuilderCurrency builderCurrency = new BuilderCurrency();
+
+                                        builderCurrency.setProperties(jSonItem);
+                                        currencies.add(builderCurrency.getCurrency());
+                                    }
+
+                                    CurrencyAdapter adapter = new CurrencyAdapter(
+                                            MainActivity.this, R.layout.listview_layout, currencies);
+                                    listView.setAdapter(adapter);
+                                    save();
+                                    update();
+                                } catch (JSONException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -142,5 +154,52 @@ public class MainActivity extends AppCompatActivity {
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    private void save() {
+        if (currencies != null && !currencies.isEmpty()) {
+            FileOutputStream out;
+            try {
+                out = openFileOutput(FILE_NAME, MODE_PRIVATE);
+                out.write(convertToByteArray(currencies));
+                out.close();
+                System.out.println("Data saved in file");
+                hasSavedData = true;
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
+        }
+    }
+
+    private byte[] convertToByteArray(ArrayList<Currency> list) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(list);
+        baos.close();
+
+        return baos.toByteArray();
+    }
+
+    private void load() {
+            FileInputStream in;
+            try {
+                in = openFileInput(FILE_NAME);
+                byte[] buffer = new byte[in.available()];
+                in.read(buffer);
+                in.close();
+                currencies = convertToArrayList(buffer);
+                System.out.println("Data loaded from file");
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
+    }
+
+    private ArrayList<Currency> convertToArrayList(byte[] bytes) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+        @SuppressWarnings("unchecked")
+        ArrayList<Currency> list = (ArrayList<Currency>) ois.readObject();
+        ois.close();
+
+        return list;
     }
 }
